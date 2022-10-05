@@ -1,17 +1,21 @@
 
-import sys # import sys
+import sys # import sys --> aby uzyskac dostep do argumentow wiersza polecen 
 
-def is_prime(num):
-    if num <= 1:
-        return False
-    for i in range(2,int(num/2 + 1)):
-        if (num % i) == 0:
+def is_prime(number):
+    try:
+        number = int(number)
+        if number <= 1:
             return False
-    return True
-
+        for i in range(2,int(number / 2 + 1)):
+            if (number % i) == 0:
+                return False
+        return True
+    except:  # lapanie errow --> spowodowanych napisami
+        print('Error has occured, probably string not an int')
+        return False 
 
 if __name__ == '__main__':
-    for arg in sys.argv[1:]:
-        if is_prime(int(arg)):
+    for arg in sys.argv[1:]: # --> biore argumenty od 1 dalej poniewaz arg 0 to 'skrypt.py'
+        if is_prime(arg):
             print(arg)
 
