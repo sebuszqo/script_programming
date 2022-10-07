@@ -21,7 +21,7 @@ def sum(arg1, arg2):
 if __name__ == "__main__":
     print(f'suma = {sum(2,3)}')
     print(f'__name__ = {__name__}')
-    print(Fraction(5,4))
+
     
 # typowanie silne i dynamiczne --> 2 + '2' = error
 
