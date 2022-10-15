@@ -1,5 +1,6 @@
-
 import sys # import sys --> aby uzyskac dostep do argumentow wiersza polecen 
+
+# python3 skrypt.py 3 2 ala
 
 def is_prime(number):
     try:
@@ -11,7 +12,7 @@ def is_prime(number):
                 return False
         return True
     except:  # lapanie errow --> spowodowanych napisami
-        print('Error has occured, probably string not an int')
+        # print('Error has occured, probably string not an int')
         return False 
 
 if __name__ == '__main__':
