@@ -2,6 +2,7 @@
 import main_H
 import unittest
 from fractions import Fraction
+# how to run:
 # python3 -m unittest tests_H.py
 
 class Test_TestSum(unittest.TestCase):
