@@ -1,11 +1,11 @@
 
 from fractions import Fraction
 import main_H
-# 1 
+# 1.
 # def sum(arg1, arg2):
 #     return arg1 + arg2
 
-# 2
+# 2.
 def sum(arg1, arg2):
     if type(arg1) is complex or type(arg2) is complex:
         return complex(round(arg1.real + arg2.real, 10), round(arg1.imag + arg2. imag, 10)) # round bo python musi zaokraglic 
