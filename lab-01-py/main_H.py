@@ -1,6 +1,6 @@
 
 from fractions import Fraction
-import main
+import main_H
 # 1 
 # def sum(arg1, arg2):
 #     return arg1 + arg2
