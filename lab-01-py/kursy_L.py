@@ -1,9 +1,9 @@
 
 # proper use: python3 kursy_L.py <max_numer_of_students>
 
-# where 'max_numer_of_students' define maximum amount of students in 1 course
+# where 'max_numer_of_students' define maximum amount of students in 1 course.
 
-# By default there is one course 'course1' and it has only 1 person inside
+# By default there is one course 'course1' and it has only 1 person inside.
 
 # Courses are stored by using python dictionary
 # names of courses are keys 
