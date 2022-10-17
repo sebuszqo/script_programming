@@ -11,7 +11,7 @@
 
 import sys
 
-#my own error
+#adding my own error
 class TooMuchPeople(Exception):
     pass
 
