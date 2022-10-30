@@ -6,12 +6,12 @@ class Term():
         if not isinstance(self._day, Day):
             raise ValueError('Wrong day type')
         self.hour = hour
-        self.minute = minute 
+        self.minute = minute
         self.duration = 90
 
     # finding what day _day.value means
     def __str__(self):
-        day = {     1: "Poniedziałek",
+        day = {      1: "Poniedziałek",
                      2: "Wtorek",
                      3: "Środa",
                      4: "Czwartek",
@@ -37,7 +37,7 @@ class Term():
             return True
         return False
 
-    #function to check is terms are ealier gives False or True
+    #function to check is terms are ealier, gives False or True
     def earlierThan(self, termin):
         # creating new instance of Term class 
         termToCheck = Term(self._day, self.hour, self.minute)
@@ -46,7 +46,7 @@ class Term():
         result = Term.isTrueOrFalse(termToCheck,termin)
         return bool(result)
 
-    #function to check is terms are later gives False or True
+    #function to check is terms are later, gives False or True
     def laterThan(self, termin):
         # creating new instance of Term class -- cuz I had problems with t
         termToCheck = Term(self._day, self.hour,self.minute)
