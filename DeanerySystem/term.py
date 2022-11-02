@@ -33,7 +33,7 @@ class Term():
     #DRY method -- to check if given days are the same, days hours and minutes
     @classmethod
     def sameDay(cls, termToCheck, termin):
-        if (termin.hour == termToCheck.hour and termin.minute == termToCheck.minute and termin._day.value == termToCheck._day.value and termin.duration != termToCheck.duration):
+        if (termin.hour == termToCheck.hour and termin.minute == termToCheck.minute and termin._day.value == termToCheck._day.value and termin.duration == termToCheck.duration):
             return True
         return False
 
@@ -65,7 +65,7 @@ class Term():
         # print(self._day.value)
 
     def equals(self, termin):
-        termToCheck = Term(self._day, self.hour,self.minute)
+        termToCheck = Term(self._day, self.hour, self.minute, self.duration)
         return bool(Term.sameDay(termToCheck,termin))
 
     # Overloading Functions and Operators in Python
