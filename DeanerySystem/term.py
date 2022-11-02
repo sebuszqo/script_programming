@@ -7,7 +7,7 @@ class Term():
             raise ValueError('Wrong day type')
         self.hour = hour
         self.minute = minute
-        self.duration = 90
+        self.duration = duration
 
     # finding what day _day.value means
     def __str__(self):
@@ -33,7 +33,7 @@ class Term():
     #DRY method -- to check if given days are the same, days hours and minutes
     @classmethod
     def sameDay(cls, termToCheck, termin):
-        if (termin.hour == termToCheck.hour and termin.minute == termToCheck.minute and termin._day.value == termToCheck._day.value):
+        if (termin.hour == termToCheck.hour and termin.minute == termToCheck.minute and termin._day.value == termToCheck._day.value and termin.duration != termToCheck.duration):
             return True
         return False
 
@@ -67,15 +67,47 @@ class Term():
     def equals(self, termin):
         termToCheck = Term(self._day, self.hour,self.minute)
         return bool(Term.sameDay(termToCheck,termin))
+
+    # Overloading Functions and Operators in Python
+    def __lt__(self, termin):
+        return self.earlierThan(termin)
+
+    def __le__(self, termin):
+        return self.earlierThan(termin) or self.equals(termin)
+
+    def __gt__(self, termin):
+        return not self.earlierThan(termin)
+
+    def __ge__(self, termin):
+        return not self.earlierThan(termin) or self.equals(termin)
+
+    def __eq__(self, termin):
+        return self.equals(termin)
+
+    def __sub__(self, termin):
+        duration = ((self.hour + 1)- termin.hour)*60 + ((self.minute + 30) - termin.minute) + ((self._day.value - termin._day.value) * 24)*60
+        # newTerm = Term(termin._day, termin.hour, termin.minute, duration)
+        return Term(termin._day, termin.hour, termin.minute, duration)
         
 if __name__ == "__main__":
-    term1 = Term(Day.TUE, 9, 45)
-    print(term1)                     
-    term2 = Term(Day.WED, 10, 15)
-    print(term2)                     
-    print(term1.earlierThan(term2)); 
-    print(term1.laterThan(term2));  
-    print(term1.equals(term2)); 
+    term1 = Term(Day.MON, 8, 30)
+    term2 = Term(Day.TUE, 9, 45, 30)
+    term3 = Term(Day.TUE, 9, 45, 90)
+    print("term1 < term2:", term1 < term2)   # Ma się wypisać True
+    print("term1 <= term2:", term1 <= term2) # Ma się wypisać True
+    print("term1 > term2:", term1 > term2)   # Ma się wypisać False
+    print("term1 >= term2:", term1 >= term2) # Ma się wypisać False
+    print("term2 == term2:", term2 == term2) # Ma się wypisać True
+    print("term2 == term3:", term2 == term3)
+    term4 = term3 - term1
+    print(term4)
+    # term1 = Term(Day.TUE, 9, 45)
+    # print(term1)                     
+    # term2 = Term(Day.WED, 10, 15)
+    # print(term2)                     
+    # print(term1.earlierThan(term2)); 
+    # print(term1.laterThan(term2));  
+    # print(term1.equals(term2)); 
 
         
 # try:
