@@ -8,10 +8,14 @@ class Lesson():
         self.name = name 
         self.teacherName = teacherName
         self.year = year
-        if (self.term._day.value in [1,2,3,4] and self.term.hour >= 8 and self.term.hour <= 20) or (self.term._day.value == 5 and self.term.hour >= 8 and self.term.hour < 17):
-            self.fullTime = True
+        self.fullTime = self.typeOfStudies()
+
+    
+    def typeOfStudies(self):
+        if ((self.term._day.value in [1,2,3,4] and self.term.hour <= 20) or (self.term._day.value == 5 and self.term.hour < 17)) and self.term.hour >= 8:
+            return True
         else:
-            self.fullTime = False
+            return False
         
     # sprawdzam juz przesuniety w tyl lub w przod dzien
     # sprawdzam ten przesuniety dzien / godzine majac wiadomosc czy nalezy to do studiow stacjonarnych lub niestacjonranych
@@ -37,7 +41,7 @@ class Lesson():
         new_term = Term(new_day, self.term.hour, self.term.minute, self.term.duration)
         # wystarczy sprawdzenie czy nowy termin spelnia warunki dla studiow stacjonarnych lub niestacjonarnych w zaleznosci ktore wybralismy
         # true - stacjonarne false - niestacjonarne
-        if Lesson.can_be_transferred_to(new_term, self.fullTime):
+        if self.can_be_transferred_to(new_term, self.fullTime):
             self.term = new_term
             return True
         else:
@@ -47,45 +51,51 @@ class Lesson():
     def laterDay(self):
         new_day = Day(1 if self.term._day.value + 1 == 8 else self.term._day.value + 1)
         new_term = Term(new_day, self.term.hour, self.term.minute, self.term.duration)
-        if Lesson.can_be_transferred_to(new_term, self.fullTime):
+        if self.can_be_transferred_to(new_term, self.fullTime):
             self.term = new_term
             return True
         else:
             return False
 
-    def laterTime(self):
+    # method to use DRY methodology
+    def timeSetUp(self):
         hoursToChange = self.term.duration // 60
-        # minutesToChange = self.term.duration - 60 * hoursToChange
         minutesToChange = self.term.duration % 60
+        return [hoursToChange, minutesToChange]
 
-        new_hour = self.term.hour + hoursToChange
-        new_minutes = self.term.minute + minutesToChange
+    def laterTime(self):
+        # hoursToChange = self.term.duration // 60
+        # # minutesToChange = self.term.duration - 60 * hoursToChange
+        # minutesToChange = self.term.duration % 60
+        arrayOfTime = self.timeSetUp()
+        new_hour = self.term.hour + arrayOfTime[0]
+        new_minutes = self.term.minute + arrayOfTime[1]
 
         if new_minutes >= 60:
-            new_hour +=1
+            new_hour += 1
             new_minutes -= 60 
 
         new_term = Term(self.term._day, new_hour, new_minutes, self.term.duration)
-        if Lesson.can_be_transferred_to(new_term, self.fullTime):
+        if self.can_be_transferred_to(new_term, self.fullTime):
             self.term = new_term
             return True
         else:
             return False
 
     def ealierTime(self):
-        hoursToChange = self.term.duration // 60
-        # minutesToChange = self.term.duration - 60 * hoursToChange
-        minutesToChange = self.term.duration % 60
-
-        new_hour = self.term.hour - hoursToChange
-        new_minutes = self.term.minute - minutesToChange
+        # hoursToChange = self.term.duration // 60
+        # # minutesToChange = self.term.duration - 60 * hoursToChange
+        # minutesToChange = self.term.duration % 60
+        arrayOfTime = self.timeSetUp()
+        new_hour = self.term.hour - arrayOfTime[0]
+        new_minutes = self.term.minute - arrayOfTime[1]
 
         if new_minutes < 0:
             new_hour -=1
             new_minutes += 60 
 
         new_term = Term(self.term._day, new_hour, new_minutes, self.term.duration)
-        if Lesson.can_be_transferred_to(new_term, self.fullTime):
+        if self.can_be_transferred_to(new_term, self.fullTime):
             self.term = new_term
             return True
         else:
