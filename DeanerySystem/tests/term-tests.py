@@ -2,7 +2,7 @@ import unittest
 from day import Day
 from term import Term
 
-#python3 -m unittest minitest.py
+#python3 -m unittest tests.term-tests
 
 class Test_DSystem(unittest.TestCase):
     def setUp(self):

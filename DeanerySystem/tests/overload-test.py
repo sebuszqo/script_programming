@@ -3,7 +3,7 @@ from day import Day
 from term import Term
  
 # tests to test implemented overloading functions and operators 
-# python3 -m unittest overload-test.py
+# python3 -m unittest tests.overload-test
 
 class Test_DSystem(unittest.TestCase):
     def setUp(self):
