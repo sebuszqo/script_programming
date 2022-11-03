@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Day(Enum):
-    MON = 1
+    MON = 1 
     TUE = 2
     WED = 3
     THU = 4
