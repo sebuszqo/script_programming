@@ -42,11 +42,6 @@ class Test_DSystem(unittest.TestCase):
         self.assertEqual(lesson2.laterTime(), False)
         self.assertEqual(lesson3.laterTime(), True)
         self.assertEqual(lesson4.laterTime(), True)
-    # def test_overloading5(self):
-    #     self.assertEqual(term2 == term2, True)
-
-    # def test_overloading6(self):
-    #     self.assertEqual(term2 == term3, False)
 
 if '__name__' == '__main__':
     unittest.main()
