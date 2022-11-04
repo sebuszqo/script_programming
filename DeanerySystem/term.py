@@ -143,7 +143,7 @@ class Term():
     #     return bool(Term.sameDay(termToCheck,termin))
         
 if __name__ == "__main__":
-    term1 = Term(Day.MON, 8, 66)
+    term1 = Term(Day.MON, 8, 30)
 
     term2 = Term(Day.TUE, 9, 45, 30)
     term3 = Term(Day.TUE, 9, 45, 90)

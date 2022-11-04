@@ -7,10 +7,11 @@ from term import Term
 
 class Test_DSystem(unittest.TestCase):
     def setUp(self):
-        global term1, term2, term3
+        global term1, term2, term3, term4
         term1 = Term(Day.MON, 8, 30)
         term2 = Term(Day.TUE, 9, 45, 30)
         term3 = Term(Day.TUE, 9, 45, 90)
+        term4 = term3 - term1
 
     def test_overloading1(self):
         self.assertEqual(term1 < term2, True)
@@ -30,5 +31,8 @@ class Test_DSystem(unittest.TestCase):
     def test_overloading6(self):
         self.assertEqual(term2 == term3, False)
 
+    def test_sub(self):
+        self.assertEqual(term4.__str__(),"Poniedziałek 8:30 [1605]")
+        
 if '__name__' == '__main__':
     unittest.main()
