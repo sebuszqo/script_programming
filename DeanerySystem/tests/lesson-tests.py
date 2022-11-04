@@ -20,6 +20,7 @@ class Test_DSystem(unittest.TestCase):
         table.put(lesson2)
         table.put(lesson3)
         table.put(lesson4)
+        # print(table._lessons)
       
     def test_ealierDay(self):
         self.assertEqual(lesson1.ealierDay(), True)
