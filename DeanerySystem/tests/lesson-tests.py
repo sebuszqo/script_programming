@@ -2,18 +2,24 @@ import unittest
 from day import Day
 from term import Term
 from lesson import Lesson
- 
+from timeTable import Timetab
+
 # tests to test apropriate implementation of lesson methods like: ealierDay, laterDay, ealierTime, laterTime
-# python3 -m unittest tests.overload-test
+# python3 -m unittest tests.lesson-tests 
 
 class Test_DSystem(unittest.TestCase):
     def setUp(self):
         global lesson1, lesson2, lesson3, lesson4
-        lesson1 = Lesson(Term(Day.TUE, 9, 40), "Kryptografia", "Krzyszot Rzecki", 2)
-        lesson2 = Lesson(Term(Day.SUN, 19, 40), "Programowanie skryptowe", "Stanisław Polak", 2)
-        lesson3 = Lesson(Term(Day.FRI, 17, 40), "Systemy operacyjne", "Paweł Topa", 2)
-        lesson4 = Lesson(Term(Day.FRI, 13, 40), "Wstęp do informatyki", "Michaił Drugi", 2)
-        
+        global table
+        table = Timetab()
+        lesson1 = Lesson(table, Term(Day.TUE, 9, 40), "Kryptografia", "Krzyszot Rzecki", 2)
+        lesson2 = Lesson(table, Term(Day.SUN, 19, 40), "Programowanie skryptowe", "Stanisław Polak", 2)
+        lesson3 = Lesson(table, Term(Day.FRI, 17, 40), "Systemy operacyjne", "Paweł Topa", 2)
+        lesson4 = Lesson(table, Term(Day.FRI, 13, 40), "Wstęp do informatyki", "Michaił Drugi", 2)
+        table.put(lesson1)
+        table.put(lesson2)
+        table.put(lesson3)
+        table.put(lesson4)
       
     def test_ealierDay(self):
         self.assertEqual(lesson1.ealierDay(), True)
@@ -42,6 +48,12 @@ class Test_DSystem(unittest.TestCase):
         self.assertEqual(lesson2.laterTime(), False)
         self.assertEqual(lesson3.laterTime(), True)
         self.assertEqual(lesson4.laterTime(), True)
+    
+    def test_act(self):
+        global actions
+        actions = ["t+", "t-", "t+", "d-", "kods-"]
+        with self.assertRaises(ValueError):
+            table.parse(actions)
 
 if '__name__' == '__main__':
     unittest.main()

@@ -1,7 +1,7 @@
 import unittest
 from day import Day
 from term import Term
- 
+
 # tests to test implemented overloading functions and operators 
 # python3 -m unittest tests.overload-test
 

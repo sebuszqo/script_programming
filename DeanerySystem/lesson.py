@@ -167,7 +167,7 @@ if __name__ == "__main__":
     table = Timetab()
     actions = ["t+", "d-", "t+", "d-"]
     act = table.parse(actions)
-    # print(act)
+    print(act)
 
     lesson1 = Lesson(table, Term(Day.MON, 12, 40), "Projektowe", "Krzyszot Dominikowski", 2)
     lesson2 = Lesson(table, Term(Day.MON, 9, 40), "Skryptowe", "Krzyszot Michail", 2)
