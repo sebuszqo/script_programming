@@ -1,15 +1,14 @@
-
 from term import Term
 from day import Day
 from typing import List
 
 
-
 class LessonError(Exception):
     pass
 
-class Lesson():
-    def __init__(self, term: Term, name: str, teacherName: str, year: int, fullTime: bool= True ):
+class Lesson(object):
+    def __init__(self, timetable, term: Term, name: str, teacherName: str, year: int, fullTime: bool= True ):
+        self._timeTable = timetable
         self.setTerm = term
         self.setName = name 
         self.setTeacherName = teacherName
@@ -78,27 +77,27 @@ class Lesson():
     # sprawdzam ten przesuniety dzien / godzine majac wiadomosc czy nalezy to do studiow stacjonarnych lub niestacjonranych
     # dzieki temu moge ocenic czy przesunieta juz data nalezy do przedzialu czasu ktory odpowiada jej 'rodzajowi' studiow
     # nie moze byc <= np. 20 bo 20:40 wtedy tez zostanie zaliczona
-    def can_be_transferred_to(self,term: Term, full_time: bool) -> bool:
-        if full_time and term._day.value in [1,2,3,4]:
-            if term._hour >= 8 and term._hour < 20:
-                return True
-        elif full_time and term._day.value in [5]:
-            if term._hour >= 8 and term._hour < 17:
-                return True
-        elif not full_time and term._day.value in [5]:
-            if term._hour >= 17 and term._hour < 20:
-                return True
-        elif not full_time and term._day.value in [6,7]:
-            if term._hour >= 8 and term._hour < 20:
-                return True
-        return False
+    # def can_be_transferred_to(self,term: Term, full_time: bool) -> bool:
+    #     if full_time and term._day.value in [1,2,3,4]:
+    #         if term._hour >= 8 and term._hour < 20:
+    #             return True
+    #     elif full_time and term._day.value in [5]:
+    #         if term._hour >= 8 and term._hour < 17:
+    #             return True
+    #     elif not full_time and term._day.value in [5]:
+    #         if term._hour >= 17 and term._hour < 20:
+    #             return True
+    #     elif not full_time and term._day.value in [6,7]:
+    #         if term._hour >= 8 and term._hour < 20:
+    #             return True
+    #     return False
 
     def ealierDay(self) -> bool:
         new_day = Day(7 if self._term._day.value - 1 == 0 else self._term._day.value - 1)
         new_term = Term(new_day, self._term._hour, self._term._minute, self._term._duration)
         # wystarczy sprawdzenie czy nowy termin spelnia warunki dla studiow stacjonarnych lub niestacjonarnych w zaleznosci ktore wybralismy
         # true - stacjonarne false - niestacjonarne
-        if self.can_be_transferred_to(new_term, self._fullTime):
+        if self._timeTable.can_be_transferred_to(new_term, self._fullTime):
             self._term = new_term
             return True
         else:
@@ -108,7 +107,7 @@ class Lesson():
     def laterDay(self) -> bool:
         new_day = Day(1 if self._term._day.value + 1 == 8 else self._term._day.value + 1)
         new_term = Term(new_day, self._term._hour, self._term._minute, self._term._duration)
-        if self.can_be_transferred_to(new_term, self._fullTime):
+        if self._timeTable.can_be_transferred_to(new_term, self._fullTime):
             self._term = new_term
             return True
         else:
@@ -133,13 +132,14 @@ class Lesson():
             new_minutes -= 60 
 
         new_term = Term(self._term._day, new_hour, new_minutes, self._term._duration)
-        if self.can_be_transferred_to(new_term, self._fullTime):
+        if self._timeTable.can_be_transferred_to(new_term, self._fullTime):
             self._term = new_term
             return True
         else:
             return False
 
     def ealierTime(self) -> bool:
+        # from timeTable import Time
         # hoursToChange = self.term.duration // 60
         # # minutesToChange = self.term.duration - 60 * hoursToChange
         # minutesToChange = self.term.duration % 60
@@ -152,7 +152,7 @@ class Lesson():
             new_minutes += 60 
 
         new_term = Term(self._term._day, new_hour, new_minutes, self._term._duration)
-        if self.can_be_transferred_to(new_term, self._fullTime):
+        if self._timeTable.can_be_transferred_to(new_term, self._fullTime):
             self._term = new_term
             return True
         else:
@@ -163,9 +163,24 @@ class Lesson():
 
 if __name__ == "__main__":
     # some manual tests before unitests
-    lesson1 = Lesson(Term(Day.MON, 9, 40), "Kryptografia", "Krzyszot Rzecki", 2)
+    from timeTable import Timetab
+    table = Timetab()
+    actions = ["t+", "d-", "t+", "d-"]
+    act = table.parse(actions)
+    # print(act)
+
+    lesson1 = Lesson(table, Term(Day.MON, 12, 40), "Projektowe", "Krzyszot Dominikowski", 2)
+    lesson2 = Lesson(table, Term(Day.MON, 9, 40), "Skryptowe", "Krzyszot Michail", 2)
+
+    table.put(lesson1)
+    table.put(lesson2)
+
+    print(table._lessons)
+    table.perform(act)
+    print(table._lessons)
     lesson1.laterDay()
-    print(lesson1)
+    lesson1.laterDay()
+   
     # lesson.earlierTime()
     # term2 = Term(Day.FRI, 9, 45, 30)
     # termafter = Lesson(term2, 'name', 'name', 2, False)
