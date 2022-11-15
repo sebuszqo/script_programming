@@ -37,7 +37,7 @@ class Timetab(object):
     def put(self, lesson: Lesson) -> bool:
             if self.busy(lesson._term):
                 raise ValueError("Term is busy already!")
-            self._lessons[lesson._term.__str__()] = lesson._name
+            self._lessons[lesson._term.__str__()] = lesson
             return True
 
     def parse(self, actions: List[str]) -> List[Action]:
@@ -59,17 +59,23 @@ class Timetab(object):
         len_lessons = len(self._lessons)
         for (index, action) in enumerate(actions, start=0):
             if action == Action.DAY_EARLIER:
-                print(self.get(list(self._lessons.values())[index % len_lessons]))
-                # list(self._lessons.keys())[index % len_lessons].ealierDay()
+                # print(self.get(list(self._lessons.values())[index % len_lessons]))
+                self.get(list(self._lessons.values())[index % len_lessons]).ealierDay()
+                print(list(self._lessons.values())[index % len_lessons])
             elif action == Action.DAY_LATER:
-                print(self.get(list(self._lessons.values())[index % len_lessons]))
-                # list(self._lessons.keys())[index % len_lessons].laterDay()
+                # print(self.get(list(self._lessons.values())[index % len_lessons]))
+                self.get(list(self._lessons.values())[index % len_lessons]).laterDay()
+                print(list(self._lessons.values())[index % len_lessons])
             elif action == Action.TIME_EARLIER:
-                print(self.get(list(self._lessons.values())[index % len_lessons]))
-                # list(self._lessons.keys())[index % len_lessons].ealierTime()
+                # print(self.get(list(self._lessons.values())[index % len_lessons]))
+                self.get(list(self._lessons.values())[index % len_lessons]).ealierTime()
+                print(list(self._lessons.values())[index % len_lessons])
+                # print(list(self._lessons.values()[index % len_lessons]))
             elif action == Action.TIME_LATER:
-                print(self.get(list(self._lessons.values())[index % len_lessons]))
-                # list(self._lessons.keys())[index % len_lessons].laterTime()
+                # print(self.get(list(self._lessons.values())[index % len_lessons]))
+                self.get(list(self._lessons.values())[index % len_lessons]).laterTime()
+                print(list(self._lessons.values())[index % len_lessons])
+                # print(list(self._lessons.values()[index % len_lessons]))
 
     def get(self, term: Term) -> Lesson:
         for lesson in list(self._lessons.values()):

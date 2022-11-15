@@ -2,7 +2,7 @@ import unittest
 from day import Day
 from term import Term
 from lesson import Lesson
-from timeTable import Timetab
+from timeTableWithoutBreaks import TimetableWithoutBreaks
 
 # tests to test apropriate implementation of lesson methods like: ealierDay, laterDay, ealierTime, laterTime
 # python3 -m unittest tests.lesson-tests 
@@ -11,15 +11,17 @@ class Test_DSystem(unittest.TestCase):
     def setUp(self):
         global lesson1, lesson2, lesson3, lesson4
         global table
-        table = Timetab()
+        global act
+        table = TimetableWithoutBreaks()
+        actions = ["t+", "d-", "t+", "d-"]
+        act = table.parse(actions)
         lesson1 = Lesson(table, Term(Day.TUE, 9, 40), "Kryptografia", "Krzyszot Rzecki", 2)
         lesson2 = Lesson(table, Term(Day.SUN, 19, 40), "Programowanie skryptowe", "Stanisław Polak", 2)
         lesson3 = Lesson(table, Term(Day.FRI, 17, 40), "Systemy operacyjne", "Paweł Topa", 2)
         lesson4 = Lesson(table, Term(Day.FRI, 13, 40), "Wstęp do informatyki", "Michaił Drugi", 2)
         table.put(lesson1)
         table.put(lesson2)
-        table.put(lesson3)
-        table.put(lesson4)
+        
         # print(table._lessons)
       
     def test_ealierDay(self):
@@ -55,6 +57,9 @@ class Test_DSystem(unittest.TestCase):
         actions = ["t+", "t-", "t+", "d-", "kods-"]
         with self.assertRaises(ValueError):
             table.parse(actions)
+    
+    def test_arr(self):
+        self.assertEqual(table.perform(act), None)
 
 if '__name__' == '__main__':
     unittest.main()

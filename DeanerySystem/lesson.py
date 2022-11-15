@@ -91,7 +91,8 @@ class Lesson(object):
     #         if term._hour >= 8 and term._hour < 20:
     #             return True
     #     return False
-
+    
+    #self._timetable  - odwolanie do klasy TimeTable - ktora posiada funkcje sprawdzajaca mozliwosc wykonania dzialania
     def ealierDay(self) -> bool:
         new_day = Day(7 if self._term._day.value - 1 == 0 else self._term._day.value - 1)
         new_term = Term(new_day, self._term._hour, self._term._minute, self._term._duration)
@@ -163,23 +164,26 @@ class Lesson(object):
 
 if __name__ == "__main__":
     # some manual tests before unitests
-    from timeTable import Timetab
-    table = Timetab()
+    from timeTableWithoutBreaks import TimetableWithoutBreaks
+    table = TimetableWithoutBreaks()
     actions = ["t+", "d-", "t+", "d-"]
     act = table.parse(actions)
     print(act)
 
-    lesson1 = Lesson(table, Term(Day.MON, 12, 40), "Projektowe", "Krzyszot Dominikowski", 2)
-    lesson2 = Lesson(table, Term(Day.MON, 9, 40), "Skryptowe", "Krzyszot Michail", 2)
-
+    # lesson1 = Lesson(table, Term(Day.THU, 12, 40), "Projektowe", "Krzyszot Dominikowski", 2)
+    # lesson2 = Lesson(table, Term(Day.FRI, 11, 40), "Skryptowe", "Krzyszot Michail", 2)
+    lesson1 = Lesson(table, Term(Day.TUE, 9, 40), "Kryptografia", "Krzyszot Rzecki", 2)
+    lesson2 = Lesson(table, Term(Day.SUN, 19, 40), "Programowanie skryptowe", "Stanisław Polak", 2)
+    
     table.put(lesson1)
     table.put(lesson2)
 
-    print(table._lessons)
+    # print(table._lessons)
     table.perform(act)
+    # print(table._lessons)
+    # lesson1.laterDay()
+    # lesson1.laterDay()
     print(table._lessons)
-    lesson1.laterDay()
-    lesson1.laterDay()
    
     # lesson.earlierTime()
     # term2 = Term(Day.FRI, 9, 45, 30)
