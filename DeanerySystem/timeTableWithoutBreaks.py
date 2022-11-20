@@ -5,7 +5,7 @@ from action import Action
 from action import Action
 
 
-class Timetab(object):
+class TimetableWithoutBreaks(object):
     def __init__(self) -> None:
         self._lessons = {}
     """ Class containing a set of operations to manage the timetable """
