@@ -1,3 +1,4 @@
+# everything from this lab is in DealerSystem or DeanerySystem
 # from klasa import Klasa
 
 #owolujemy sie najpierw do klasy i jej zmiennej statycznej 

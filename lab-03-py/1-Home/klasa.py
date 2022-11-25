@@ -1,3 +1,5 @@
+# everything from this lab is in DealerSystem or DeanerySystem
+
 import sys
 ##################################
 # python3 -i klasa.py

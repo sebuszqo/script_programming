@@ -11,18 +11,23 @@ import collections
 # print(sys.stdin.readlines())
 
   
-print(collections.Counter(len(x) for x in sys.stdin.read().split()))
+# print(collections.Counter(len(x) for x in sys.stdin.read().split()))
 
 
 # print(
-#     # dict(
-#     #     sorted(collections.Counter(
-#     #         [len(x) for x in sys.stdin.read().split()]).items()
-#     #     )
-#     # )
+#     dict(
+#         sorted(collections.Counter(
+#             [len(x) for x in sys.stdin.read().split()]).items()
+#         )
+#     )
 # )
 
-#python3 -c "import sys; import collections; print(collections.Counter(len(x) for x in sys.stdin.read().split()))"
 
-#qq faff
-#1 1
+print(collections.Counter(len(x) for x in sys.stdin.read().split()))
+
+
+print(dict(sorted(collections.Counter(map(lambda x: len(x), sys.stdin.read().split())).items())))
+
+# python3 -c "import sys; import collections; print(collections.Counter(len(x) for x in sys.stdin.read().split()))"
+# python3 -c "import sys; import collections; print(dict(collections.Counter(map(lambda x: len(x), sys.stdin.read().split()))))"
+#1 1 
