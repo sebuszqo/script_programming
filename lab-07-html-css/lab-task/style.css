@@ -32,7 +32,7 @@ main .card {
 }
 
 main .card{
-    animation: ease-in-out rotating 3s;
+    animation: ease-in-out rotating 3s infinite;
     animation-play-state: paused;
     /*-webkit-animation: ease-in-out rotating 3s;*/
     /*-webkit-animation-play-state: paused;*/
