@@ -1,6 +1,7 @@
 
 aside  {
     /* Specyfikacja wyglądu */
+    /*display: flex;*/
     float: right;
     width: 550px;
     padding: 20px;
@@ -21,6 +22,7 @@ footer {
 }
 header {
     /* Specyfikacja wyglądu */
+    display: block;
     padding: 0;
     margin: 50px;
 }
@@ -68,7 +70,9 @@ nav li {
     to {color: blue;}
 }
 
-@media only screen and (max-width: 480px) {
+@media screen
+and (min-device-width: 200px)
+and (max-device-width: 800px){
     body {
         margin: 0;
         font-size: 3vw;
@@ -79,6 +83,7 @@ nav li {
     footer,
     main,
     nav {
+        /*clear: both;*/
         width: 100%;
         float: none;
     }
