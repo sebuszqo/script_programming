@@ -24,28 +24,17 @@
     </canvas>
 </main>
 <script>
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d');
-    ctx.fillText("Hello World", 70, 20); //Wykreślenie podanego tekstu na płótnie / Drawing given text on canvas
+    // margines od prawej | margines od góry | szerokość | wysokość
+    let canvas = document.getElementById('canvas')
+    let ctx = canvas.getContext('2d')
+    ctx.fillStyle = "lightblue";
+    ctx.fillText('Hello Dealer', 75, 80)
     ctx.beginPath();
-    ctx.rect(50, 40, 100, 50);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = 'red';
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(100, 100);
-    ctx.lineTo(50, 150);
-    ctx.lineTo(150,150);
-    ctx.lineTo(100,100);
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = 'green';
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(100, 220, 50, 0, 2*Math.PI);
-    ctx.lineWidth = 5;
-    ctx.stroke();
+    ctx.fillRect(20, 185  ,160 ,35)
+    ctx.fillRect(50, 155  ,100 ,35)
+    ctx.arc(canvas.width /4, canvas.height * 3/4, 22, 0, 2 * Math.PI);
+    ctx.arc(canvas.width * 3/4, canvas.height * 3/4, 22, 0, 2 * Math.PI);
+    ctx.fill();
 </script>
 </body>
 </html>
