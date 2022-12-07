@@ -58,12 +58,10 @@ nav li {
 
 .azure {
     background-color: azure;
-}
-
-.shadow-azure {
     border: 2px solid black;
     box-shadow: 0px 0px 10px;
 }
+
 
 @keyframes color_changes {
     from {color: red;}

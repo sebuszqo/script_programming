@@ -19,7 +19,6 @@
 
 // let arrToSum = []
 const addDigits = (string) => {
-
     let arr = string.split("")
     return arr.filter(char => Boolean(Number(char))).reduce((prev, curr)=> Number(prev) + Number(curr), 0)
 }
@@ -31,7 +30,6 @@ const countLetters = (string) =>{
 }
 
 let sum = 0
-
 const addAllNumbers = (string) =>{
     let arr = string.split("");
     console.log('suma:',sum)
