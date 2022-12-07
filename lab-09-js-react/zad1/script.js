@@ -19,3 +19,17 @@ setButton.addEventListener("click",()=>{
         element.classList.add('azure');
     })
 })
+
+
+// another way to do the same thing
+// let styles = document.styleSheets;
+//
+// console.log(styles)
+//
+// document.getElementById('delete').onclick = () => {
+//     styles[0].disabled = true;
+// }
+//
+// document.getElementById('set').onclick = () => {
+//     styles[0].disabled = false;
+// }

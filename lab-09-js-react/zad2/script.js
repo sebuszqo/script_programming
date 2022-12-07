@@ -1,5 +1,5 @@
 function decrement(){
-    let current = parseInt(document.getElementById('counter').value);
+    let current = document.getElementById('counter').valueAsNumber;
     if (current <= 0) {return 0;}
 
     let spans = document.getElementsByTagName('span');
