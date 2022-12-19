@@ -11,4 +11,4 @@ let op = new things.Operation(args[0], args[1]);
 // node index "43" 3
 console.log(op.sum())
 
-// Call: node index.js 112 1008
+// Call: node module.js 112 1008
