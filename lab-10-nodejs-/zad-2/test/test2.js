@@ -4,7 +4,7 @@ let assert = require('assert');
 
 describe('The isDirOrFile() function', function () {
     it('Returns file for plik.txt', function () {
-        assert.strictEqual(isDirOrFile("plik.txt"), "file")
+        assert.strictEqual(isDirOrFile("../zad-2/plik.txt"), "file")
     });
     it('Returns dir for /etc', function () {
         assert.strictEqual(isDirOrFile("/etc"), 'dir')
