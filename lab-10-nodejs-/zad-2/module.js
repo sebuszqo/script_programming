@@ -7,11 +7,14 @@ exports.isDirOrFile = (fileOrDirectory) => {
         const stat = fs.statSync(fileOrDirectory);
         if (stat.isFile()) {
             console.log(`${fileOrDirectory} jest plikiem, a jego zawartością jest:`);
-            return (fs.readFileSync(fileOrDirectory, 'utf-8'));
+            console.log(fs.readFileSync(fileOrDirectory, 'utf-8'));
+            return "file"
         } else if (stat.isDirectory()) {
-            return (`${fileOrDirectory} jest katalogiem`);
+            console.log(`${fileOrDirectory} jest katalogiem`);
+            return "dir"
         } else {
-            return (`${fileOrDirectory} to coś innego`);
+            console.log(`${fileOrDirectory} to coś innego`);
+            return "something else"
         }
     } catch (error) {
         return (`Nie udało się odczytać informacji o pliku lub katalogu: ${error}`);
