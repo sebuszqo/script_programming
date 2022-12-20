@@ -1,4 +1,4 @@
-/** Operation calass for laboratory exercises */
+/** Class Operation made for laboratory exercises */
 exports.Operation = class {
     /**
      * Constructor. Represents two values. Could be either string or number.

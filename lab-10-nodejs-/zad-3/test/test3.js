@@ -6,7 +6,7 @@ let server = supertest.agent("http://localhost:8000");
 
 // UNIT test begin
 describe('GET /submit?name=John', function () {
-    it('Brak takiego pliku', function (done) {
+    it('Sprawdzenie braku pliku', function (done) {
         server
             .get('/submit?name=John')
             .expect('Content-Type', /text\/plain/)
@@ -15,7 +15,7 @@ describe('GET /submit?name=John', function () {
 });
 
 describe('GET /submit?name=/etc', function (){
-    it('To jest katalog', function (done){
+    it('Sprawdzenie katalogu', function (done){
         server
             .get('/submit?name=/etc')
             .expect('Content-Type', /text\/plain/)
@@ -24,7 +24,7 @@ describe('GET /submit?name=/etc', function (){
 });
 
 describe('GET /submit?name=plik.txt', function (){
-    it('To jest plik', function (done){
+    it('Sprawdzenie pliku', function (done){
         server
             .get('/submit?name=plik.txt')
             .expect('Content-Type', /text\/plain/)

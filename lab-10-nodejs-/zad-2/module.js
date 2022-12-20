@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-// exportuje funkcje aby użyć jej w script.js
+// exports function to use it in script.js
 
 exports.isDirOrFile = (fileOrDirectory) => {
     try {
@@ -20,5 +20,3 @@ exports.isDirOrFile = (fileOrDirectory) => {
         return (`Nie udało się odczytać informacji o pliku lub katalogu: ${error}`);
     }
 }
-
-// console.log(isDirOrFile(argv[2]))

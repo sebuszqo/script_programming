@@ -2,6 +2,12 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+
+// REMEMBER TO RUN SERVER BEFORE TESTING !
+// npx nodemon server.js
+// then --> npx mocha
+
+
 async function showFileData(res, absolutePath){
     fs.stat(absolutePath, (err, stats) => {
         if (err){

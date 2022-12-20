@@ -13,17 +13,26 @@ let assert = require('assert');
 let module1 = require('../commonJs/module');
 
 describe('The sum() method', function () {
-    it('Returns 4 for 2+2', function () {
-        let op = new module1.Operation(2, 2);
-        assert.strictEqual(op.sum(), 4)
+    it('Returns 7 for 5+2', function () {
+        let op = new module1.Operation(5, 2);
+        assert.strictEqual(op.sum(), 7)
         // expect(op.sum()).to.equal(4);
     });
-    it('Returns 0 for -2+2', function () {
-        let op = new module1.Operation(-2, 2);
+    it('Returns 0 for -4+4', function () {
+        let op = new module1.Operation(-4, 4);
         assert.strictEqual(op.sum(), 0)
         // expect(op.sum()).to.equal(0);
     });
 });
+
+// npx mocha gives:
+// The sum() method
+//     ✔ Returns 7 for 5+2
+//     ✔ Returns 0 for -4+4
+//
+//
+//     2 passing (3ms)
+
 
 //-----------------------------------
 // Mocha tests with ES6 style imports

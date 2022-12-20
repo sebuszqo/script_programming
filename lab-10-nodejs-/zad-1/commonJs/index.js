@@ -1,14 +1,15 @@
 const things = require('./module.js');
 
-// gives me 2 lat parameters
-let args = process.argv.slice(-2)
+// sliceing to take only 2 last arguments cuz our numbers that we gave in terminal have positions args[2] args[3]
+const args = process.argv.slice(-2)
 
 
-// console.log(args)
-
-let op = new things.Operation(args[0], args[1]);
+const operation = new things.Operation(args[0], args[1]);
 
 // node index "43" 3
-console.log(op.sum())
+console.log(operation.sum())
 
-// Call: node module.js 112 1008
+// node module.js 112 1008
+
+
+// npx mocha
