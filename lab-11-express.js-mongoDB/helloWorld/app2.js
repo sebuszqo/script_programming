@@ -59,7 +59,7 @@ app.get('/json/:name', async(req,res)=>{
             element.result = results(res, element.o, element.x, element.y)
         )
         // res.render('index', {table: data})
-        res.render('operations',{represent_table: data})
+        res.render('operations',{table: data})
     }
     catch (err){
         res.send(`Error occurred during reading a file: ${fileName}`)

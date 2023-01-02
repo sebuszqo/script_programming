@@ -9,7 +9,7 @@ html(lang='en', data-bs-theme='dark')
         title Your first page
     body
         h1 LAB 11 - express.js & mongodb - operations
-        if represent_table
+        if table
             table(class="table" border="solid 1px black")
                 thead
                     tr
@@ -18,7 +18,7 @@ html(lang='en', data-bs-theme='dark')
                         th(width="60px") y
                         th(width="60px") result
                 tbody
-                    each element in represent_table
+                    each element in table
                         tr
                             td(text-align="center")= element.x
                             td(text-align="center")= element.o
