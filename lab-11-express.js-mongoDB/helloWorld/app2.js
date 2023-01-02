@@ -61,7 +61,7 @@ app.get('/json/:name', async(req,res)=>{
         res.render('operations',{table: data})
     }
     catch (err){
-        res.send("Error occurred")
+        res.send(`Error occurred during reading a file: ${fileName}`)
     }
 }
 );

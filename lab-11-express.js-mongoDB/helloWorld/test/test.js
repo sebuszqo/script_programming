@@ -1,17 +1,19 @@
 //Source:  https://codeforgeek.com/unit-testing-nodejs-application-using-mocha/
 const supertest = require("supertest");
-var chai = require('chai');
-var expect = chai.expect;
+const chai = require('chai');
+const chaiJson = require('chai-json');
+
+chai.use(chaiJson);
 const fs = require('fs');
 const path = require("path");
-chai.use(require('chai-json'))
 const server = supertest.agent("http://localhost:3000");
-chai.should()
 
 
+
+// npm run test - to run tests
 
 // UNIT test begin
-describe('GET /', function() {
+describe('GET /', () => {
     it('respond with html', function(done) {
         server
             .get('/')
@@ -20,8 +22,8 @@ describe('GET /', function() {
     });
 });
 
-describe('GET /', function (){
-    it("My first Test", function (done){
+describe('GET /', () => {
+    it("My first Test",(done)=>{
         server
             .get('/')
             .expect('Content-Type', /html/)
@@ -29,8 +31,8 @@ describe('GET /', function (){
     })
 })
 
-describe("Checking GET /json/example", function (){
-    it('Response',function (done){
+describe("Checking GET /json/example",()=>{
+    it('Response',(done)=>{
         server.get('/json/example').expect('Content-Type',/html/).expect(200,done)
     });
 
@@ -57,8 +59,8 @@ describe("Checking GET /json/example", function (){
 });
 
 
-describe('Check returning sum /', function (){
-    it("Check / route content", function (done){
+describe('Check returning sum /', ()=>{
+    it("Check / route content", (done)=>{
         server
             .get('/')
             .expect('Content-Type', /html/)
@@ -68,16 +70,40 @@ describe('Check returning sum /', function (){
     });
 });
 
-describe('Checking JSON files',function (){
-    it("Propper JSON", function (done){
-        const filePath = path.join(__dirname, 'data', 'example.json');
-        chai.expect(".\\data\\example.json").to.be.jsonFile();
-        done()
+describe('Checking JSON file', () => {
+    it("Should be a valid JSON file ", () => {
+        const file = fs.readFileSync("./data/example.json");
+        chai.expect(file).to.be.jsonObj()
+    });
+    it("Should contain specific properties and values",()=>{
+        chai.expect("./data/example.json").to.be.jsonWithProps(
+        {
+            "o":"+",
+            "x": 4,
+            "y": 6
+        },
+        {
+            "o":"-",
+            "x": 11,
+            "y": 24
+        },
+        {
+            "o":"*",
+            "x": 15,
+            "y": 3
+        },
+        {
+            "o":"/",
+            "x": 21,
+            "y": 7
+        },
+        {
+            "o":"+",
+            "x": 21,
+            "y": 7
+        }
+        );
+    });
+});
 
-    })
-})
 
-
-
-// npm run test - uruchomienie testu
-//
