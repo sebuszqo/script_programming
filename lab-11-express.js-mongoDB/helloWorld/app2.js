@@ -6,6 +6,10 @@ const app = express();
 let x = 1;
 let y = 2;
 
+const mongo = require('mongodb');
+const client = new mongo.MongoClient('mongodb://localhost:27017');
+
+
 // *** Functions definitions ***
 
 const sum = (x,y) => x + y;
@@ -24,7 +28,11 @@ const results = (res, o, x, y) =>{
             break
         case "/":
             return x / y;
-            break;
+            break
+        case ":":
+            o = "/"
+            return x / y;
+            break
         default:
             res.send("There is no valid operation");
             res.end();
@@ -66,6 +74,42 @@ app.get('/json/:name', async(req,res)=>{
     }
 }
 );
+
+app.get('/calculate/:operation/:x/:y', (req,res)=>{
+    let {x, y, operation} = req.params;
+    x = Number(x)
+    y = Number(y)
+
+    console.log(typeof x)
+    if (['+','-','*',':'].includes(req.params.operation)){
+        (async () =>{
+            try{
+                await client.connect()
+                console.log("Connected to MongoDB")
+                const operationObj = {
+                    operation: operation,
+                    x: x,
+                    y: y,
+                    result: results(res,operation, x, y)
+                }
+                const db = client.db('skryptowe');
+                const result = await db.collection("lab11").insertOne(operationObj);
+                console.log(result)
+
+            }
+            catch (err){
+                console.log("uwaga")
+            }finally {
+                await client.close()
+            }
+        })();
+        let rep = `${req.params.x} ${req.params.operation} ${req.params.y} = ${results(res, req.params.operation, x, y)}`
+        res.render('index', {sum: rep})
+    }
+    else {
+        throw Error("Invalid operation")
+    };
+});
 // The application is to listen on http://localhost:3000
 app.listen(3000, function () {
     console.log('The application is available on http://localhost:3000');
