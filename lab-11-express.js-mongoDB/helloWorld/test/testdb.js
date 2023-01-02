@@ -29,3 +29,19 @@ describe("GET /calculate/:operation/:x/:y",()=>{
             });
     });
 });
+
+describe("GET /result", ()=>{
+    it("Should render a table with the list of operations from database",(done)=>{
+        server
+            .get("/result")
+            .end((err,res)=>{
+                try {
+                    expect(res.text).to.contain(`<td text-align="center">3</td>`)
+                done()}
+                catch (err){
+                    console.error(err)
+                    done(err)
+                }
+            })
+    })
+})
