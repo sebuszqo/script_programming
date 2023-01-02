@@ -3,13 +3,19 @@
 
 const express = require('express'),
     logger = require('morgan');
-const path = require('path');
 const {readFile} = require('fs').promises;
+
+const mongo = require('mongodb');
+const client = new mongo.MongoClient('mongodb://localhost:27017');
 
 // creating an app
 const app = express();
 const x = 1;
 const y = 2;
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'pug');
+app.locals.pretty = app.get('env') === 'development';
 
 // Informacja dla prowadzącego:
 // Jako, że dotychczas w życiu pisałem już trochę w express.js oraz node.js pozwoliłem sobie pisać w sposób uproszczony — funkcje strzałkowe etc. - stwierdziłem, że przy pisaniu tak prostych przykładów nie ma sensu dodatkowe użycie TS
@@ -37,7 +43,7 @@ const results = (res, o, x, y) =>{
             return x / y;
             break;
         default:
-            res.send("There is no valid operation");
+            res.send("Invalid Operation");
             res.end();
             break;
     }
@@ -82,9 +88,64 @@ app.get('/json/:name', async(req,res)=>{
     catch (err){
         res.send(`Error during reading a file: ${fileName}`);
         res.end();
-    }
+    };
+});
 
-})
+
+app.get('/calculate/:operation/:x/:y', (req,res)=>{
+    let {x, y, operation} = req.params;
+    if (operation === ":"){
+        operation = "/"
+    }
+    x = Number(x)
+    y = Number(y)
+    if (['+','-','*',':'].includes(req.params.operation)){
+        (async () =>{
+            try{
+                await client.connect()
+                console.log("Connected to MongoDB")
+                const operationObj = {
+                    o: operation,
+                    x,
+                    y,
+                    result: results(res,operation, x, y)
+                }
+                const db = client.db('skryptowe');
+                const result = await db.collection("lab11").insertOne(operationObj);
+                console.log(result)
+
+            }
+            catch (err){
+                console.error("Error has occurred", err)
+            }finally {
+                await client.close()
+            }
+        })();
+        res.send(`${req.params.x} ${operation} ${req.params.y} = ${results(res, req.params.operation, x, y)}`)
+    }
+    else {
+        throw Error("Invalid operation")
+    };
+});
+
+app.get('/result', async (req, res) =>{
+    try {
+        await client.connect()
+        console.log("Connected to MongoDB")
+        const db = client.db('skryptowe')
+        const collection = db.collection("lab11")
+        const data = collection.find({})
+        data.toArray((err,docs)=>{
+            if (err) console.error("error occurred", err)
+            console.log("Retrieved documents: ", docs)
+            client.close()
+            res.render("operations", {table: docs})
+        });
+    }
+    catch (err){
+        console.error('Cannot connect to MongoDB:', err)
+    }
+});
 
 // // The application is to listen on http://localhost:3000
 app.listen(3000, function () {

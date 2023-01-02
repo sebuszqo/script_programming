@@ -29,12 +29,8 @@ const results = (res, o, x, y) =>{
         case "/":
             return x / y;
             break
-        case ":":
-            o = "/"
-            return x / y;
-            break
         default:
-            res.send("There is no valid operation");
+            res.send("Invalid Operation");
             res.end();
             break;
     }
@@ -77,19 +73,20 @@ app.get('/json/:name', async(req,res)=>{
 
 app.get('/calculate/:operation/:x/:y', (req,res)=>{
     let {x, y, operation} = req.params;
+    if (operation === ":"){
+        operation = "/"
+    }
     x = Number(x)
     y = Number(y)
-
-    console.log(typeof x)
     if (['+','-','*',':'].includes(req.params.operation)){
         (async () =>{
             try{
                 await client.connect()
                 console.log("Connected to MongoDB")
                 const operationObj = {
-                    operation: operation,
-                    x: x,
-                    y: y,
+                    o: operation,
+                    x,
+                    y,
                     result: results(res,operation, x, y)
                 }
                 const db = client.db('skryptowe');
@@ -98,17 +95,37 @@ app.get('/calculate/:operation/:x/:y', (req,res)=>{
 
             }
             catch (err){
-                console.log("uwaga")
+                console.log("Error has occurred")
             }finally {
                 await client.close()
             }
         })();
-        let rep = `${req.params.x} ${req.params.operation} ${req.params.y} = ${results(res, req.params.operation, x, y)}`
+        let rep = `${req.params.x} ${operation} ${req.params.y} = ${results(res, req.params.operation, x, y)}`
         res.render('index', {sum: rep})
     }
     else {
         throw Error("Invalid operation")
     };
+});
+
+app.get('/result', (req, res)=>{
+    client
+        .connect()
+        .then(()=>{
+            console.log("Connected to MongoDB")
+            const db = client.db('skryptowe')
+            db.collection("lab11")
+                .find({})
+                .toArray((err,docs)=>{
+                    if (err) console.error("error occurred", err)
+                    console.log("Retrieved documents: ", docs)
+                    client.close()
+                    res.render("operations", {table: docs})
+                });
+        })
+        .catch((err) =>{
+            console.error("Cannot connect to MongoDb", err)
+        });
 });
 // The application is to listen on http://localhost:3000
 app.listen(3000, function () {
