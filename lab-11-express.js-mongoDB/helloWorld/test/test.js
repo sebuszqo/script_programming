@@ -14,7 +14,7 @@ const server = supertest.agent("http://localhost:3000");
 
 // UNIT test begin
 describe('GET /', () => {
-    it('respond with html', function(done) {
+    it('respond with html', (done) =>{
         server
             .get('/')
             .expect('Content-Type', /html/)
@@ -41,17 +41,17 @@ describe("Checking GET /json/example",()=>{
             .get('/json/example')
             .expect('Content-Type', /html/)
             .expect(async (res)=>{
-                chai.expect(res.text, `<table>
+                chai.expect(res.text, `<table class="table" border="solid 1px black"">
     <thead>
     <tr>
-        <th> x </th>
-        <th> Operation </th>
-        <th> y </th>
-        <th> Result </th>
+        <th width="60px"> x </th>
+        <th width="60px"> Operation </th>
+        <th width="60px"> y </th>
+        <th width="60px"> Result </th>
     </tr>
     </thead>
     <tbody>
-     <tr><td> 4 </td><td> + </td><td> 6 </td><td> 10 </td></tr><tr><td> 11 </td><td> - </td><td> 24 </td><td> -13 </td></tr><tr><td> 15 </td><td> * </td><td> 3 </td><td> 45 </td></tr><tr><td> 21 </td><td> / </td><td> 7 </td><td> 3 </td></tr><tr><td> 21 </td><td> + </td><td> 7 </td><td> 28 </td></tr>
+     <tr><td text-align="center"> 4 </td><td text-align="center"> + </td><td text-align="center"> 6 </td><td text-align="center"> 10 </td></tr><tr><td text-align="center"> 11 </td><td text-align="center"> - </td><td text-align="center"> 24 </td><td text-align="center"> -13 </td></tr><tr><td text-align="center"> 15 </td><td text-align="center"> * </td><td text-align="center"> 3 </td><td text-align="center"> 45 </td></tr><tr><td text-align="center"> 21 </td><td text-align="center"> / </td><td text-align="center"> 7 </td><td text-align="center"> 3 </td></tr><tr><td text-align="center"> 21 </td><td text-align="center"> + </td><td text-align="center"> 7 </td><td text-align="center"> 28 </td></tr>
     </tbody>
     </table>
 `)}).end(done)

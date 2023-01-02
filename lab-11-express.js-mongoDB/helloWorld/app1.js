@@ -56,20 +56,20 @@ app.get('/json/:name', async(req,res)=>{
         let restOfMyResponse = '';
         data.forEach(element =>{
             restOfMyResponse += '<tr>'
-            restOfMyResponse += `<td> ${element.x} </td>`
-            restOfMyResponse += `<td> ${element.o} </td>`
-            restOfMyResponse += `<td> ${element.y} </td>`
+            restOfMyResponse += `<td text-align="center"> ${element.x} </td>`
+            restOfMyResponse += `<td text-align="center"> ${element.o} </td>`
+            restOfMyResponse += `<td text-align="center"> ${element.y} </td>`
             const result = results(res, element.o, element.x, element.y)
-            restOfMyResponse += `<td> ${result} </td>`
+            restOfMyResponse += `<td text-align="center"> ${result} </td>`
             restOfMyResponse +="</tr>"
         })
-        response += `<table>
+        response += `<table class="table" border="solid 1px black">
     <thead>
     <tr>
-        <th> x </th>
-        <th> Operation </th>
-        <th> y </th>
-        <th> Result </th>
+        <th width="60px"> x </th>
+        <th width="60px"> Operation </th>
+        <th width="60px"> y </th>
+        <th width="60px"> Result </th>
     </tr>
     </thead>
     <tbody>
@@ -77,7 +77,6 @@ app.get('/json/:name', async(req,res)=>{
     </tbody>
     </table>
     `
-        console.log(response)
         res.send(`${response}`);
     }
     catch (err){

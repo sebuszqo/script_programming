@@ -9,20 +9,19 @@ html(lang='en', data-bs-theme='dark')
         title Your first page
     body
         h1 LAB 11 - express.js & mongodb - operations
-        if table
-            table
+        if represent_table
+            table(class="table" border="solid 1px black")
                 thead
                     tr
-                        th x
-                        th operation
-                        th y
-                        th result
+                        th(width="60px") x
+                        th(width="60px") operation
+                        th(width="60px") y
+                        th(width="60px") result
                 tbody
-                    each element in table
+                    each element in represent_table
                         tr
-                            td= element.x
-                            td= element.o
-                            td= element.y
-                            td= element.result
-
+                            td(text-align="center")= element.x
+                            td(text-align="center")= element.o
+                            td(text-align="center")= element.y
+                            td(text-align="center")= element.result
 
