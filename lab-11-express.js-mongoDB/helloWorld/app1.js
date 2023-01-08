@@ -102,7 +102,7 @@ app.get('/calculate/:operation/:x/:y', (req,res)=>{
     if (['+','-','*',':'].includes(req.params.operation)){
         (async () =>{
             try{
-                await client.connect()
+                client.connect()
                 console.log("Connected to MongoDB")
                 const operationObj = {
                     o: operation,
@@ -112,7 +112,7 @@ app.get('/calculate/:operation/:x/:y', (req,res)=>{
                 }
                 const db = client.db('skryptowe');
                 const result = await db.collection("lab11").insertOne(operationObj);
-                console.log(result)
+                // console.log(result)
 
             }
             catch (err){
@@ -130,7 +130,7 @@ app.get('/calculate/:operation/:x/:y', (req,res)=>{
 
 app.get('/result', async (req, res) =>{
     try {
-        await client.connect()
+        client.connect()
         console.log("Connected to MongoDB")
         const db = client.db('skryptowe')
         const collection = db.collection("lab11")
