@@ -60,49 +60,51 @@ html(lang='en')
             /*********************************************************************************/
             /* Function that performs (asynchronous) query to the web server using Fetch API */
             /*********************************************************************************/
-            function requestFetchAPI() {
-                fetch('/submit', {
-                    headers: {
-                        //****************************************************************************************
-                        // What is the acceptable data type - the server part should return data of the given type
-                        // Default value: '*/*'
-                        //****************************************************************************************
-                        // Uncomment one of the lines below
-                        //*********************************
-                        // 'Accept': 'application/json'
-                        // 'Accept': 'application/xml'
-                    }
-                }) // Execution of the (asynchronous) query to the web server — a promise is created
-                    .then(function (response) { // if the promise is fulfilled
-                        if (!response.ok)
-                            throw Error(response.statusText);
-                        if (!response.headers.get('content-type')?.includes('application/json')) {
-                            // If the received data is plain text or an XML document
-                            const result = response.text();
-                            window.alert(result); // show the Promise object
-                            console.log(result);
-                        }
-                        else {
-                            //If the received data is a JSON document
-                            const result = response.json();
-                            window.alert(result); // show the Promise object
-                            console.log(result);
-                        }
-                    })
-                    .catch(function (error) { // if the promise is rejected
-                        window.alert(error);
-                    });
-            }
+            // function requestFetchAPI() {
+            //     fetch('/submit', {
+            //         headers: {
+            //             //****************************************************************************************
+            //             // What is the acceptable data type - the server part should return data of the given type
+            //             // Default value: '*/*'
+            //             //****************************************************************************************
+            //             // Uncomment one of the lines below
+            //             //*********************************
+            //             'Accept': 'application/json'
+            //             // 'Accept': 'application/xml'
+            //         }
+            //     }) // Execution of the (asynchronous) query to the web server — a promise is created
+            //         .then(function (response) { // if the promise is fulfilled
+            //             if (!response.ok)
+            //                 throw Error(response.statusText);
+            //             if (!response.headers.get('content-type')?.includes('application/json')) {
+            //                 // If the received data is plain text or an XML document
+            //                 const result = response.text();
+            //                 console.log("ss",result)
+            //                 window.alert(result); // show the Promise object
+            //                 console.log(result);
+            //             }
+            //             else {
+            //                 //If the received data is a JSON document
+            //                 const result = response.json();
+            //                 console.log("s",result)
+            //                 window.alert(result); // show the Promise object
+            //                 console.log(result);
+            //             }
+            //         })
+            //         .catch(function (error) { // if the promise is rejected
+            //             console.log(error)
+            //             window.alert(error);
+            //         });
+            // }
 
             /***********************************************/
             /* Same as above but using 'async' and 'await' */
             /***********************************************/
-            /*
             async function requestFetchAPI() {
                 try {
-                    response = await fetch('/submit', {
+                    let response = await fetch('/submit', {
                         headers: {
-                            // 'Accept': 'application/json'
+                            'Accept': 'application/json'
                             // 'Accept': 'application/xml'
                         }
                     }); // Execution of the (asynchronous) query to the web server — a promise is created
@@ -119,6 +121,7 @@ html(lang='en')
                     else {
                         //If the received data is a JSON document
                         const result = response.json();
+                        console.log(result)
                         window.alert(result); // show the Promise object
                         console.log(result);
                     }
@@ -127,7 +130,6 @@ html(lang='en')
                     window.alert(error);
                 }
             }
-            */
 
     body
         main
