@@ -30,4 +30,21 @@ clientRouter
     })
     // post to start a fight
 
-
+    .post('/return', async (req, res) => {
+        const {returnId} = req.body
+        const name = returnId.split(",")[1]
+        const id = returnId.split(",")[0]
+        const car = await CarRecord.getOneCar(`${id}`)
+        await car.incNum()
+        await UserRecord.deleteOne(id,name)
+        res.redirect('/client')
+    })
+    .post('/rent', async (req, res) => {
+        // const {rentId} = req.body
+        const {rentId, name}= req.body
+        const user = new UserRecord({"name":name, "car":rentId})
+        await user.insert()
+        const car = await CarRecord.getOneCar(rentId)
+        await car.decNum()
+        res.redirect('/client')
+    })
