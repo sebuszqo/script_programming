@@ -1,5 +1,8 @@
 import fetch from "node-fetch";
 
+import cors from 'cors';
+
+
 import express from "express";
 
 import logger from "morgan";
@@ -9,11 +12,7 @@ const app2 = express();
 
 app1.use(logger('dev'));
 app2.use(logger('dev'));
-
-app2.get('/', function (req, res) {
-	res.send('Response from 3001');
-});
-
+app2.use(cors());
 app1.get('/', (req,res)=>{
     res.send(`
     <html>
@@ -42,7 +41,19 @@ app1.get('/', (req,res)=>{
     
             remoteDiv.innerHTML = 'Downloading data';
             localDiv.innerHTML = new Date().toString();
-    
+            fetch('http://localhost:3001/')
+                .then(response => response.text())
+                .then(htmlString => {
+                const parser = new DOMParser();
+                const htmlDoc = parser.parseFromString(htmlString, 'text/html');
+                const dateElement = htmlDoc.getElementById('date');
+                const timeElement = htmlDoc.getElementById('time');
+                const date = dateElement.textContent;
+                const time = timeElement.textContent;
+                localDiv.innerHTML = date+time;
+    // Update the 'local' div with the date and time
+  });
+
             fetch('https://worldtimeapi.org/api/timezone/' + area + '/' + location)
 
                 .then(response => {
@@ -59,7 +70,7 @@ app1.get('/', (req,res)=>{
             remoteDiv.innerHTML = dateString+" (CET)";
         })
         .catch(error => {
-            
+           
             remoteDiv.innerHTML = error.message;
         });
 }
@@ -68,12 +79,29 @@ app1.get('/', (req,res)=>{
     </html>`)
 });
 
+app2.get('/', (req, res) => {
+    const now = new Date();
+    const dateString = now.toDateString();
+    const timeString = now.toTimeString();
+
+    const html = `
+    <div>
+      <span id='date'>${dateString}</span>
+      <span id='time'>${timeString}</span>
+    </div>
+  `;
+
+    res.send(html);
+});
+
+
+
 app1.listen(3000, function () {
-    console.log('The application is available on port 3000');
+    console.log('The application is available on http://localhost:3000');
 });
 
 app2.listen(3001, function () {
-    console.log('The application is available on port 3001');
+    console.log('The application is available  on http://localhost:3001');
 });
 console.log("To stop the server, press 'CTRL + C'");
 

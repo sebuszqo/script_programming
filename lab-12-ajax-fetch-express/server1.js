@@ -11,6 +11,11 @@ app.locals.pretty = app.get('env') === 'development';
 app.use(logger('dev'));
 // app.use(express.static(__dirname + '/public'));
 
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+
 // *** Route definitions ***
 
 // The first route
@@ -39,9 +44,16 @@ app.get('/submit', function (req, res) {
         default:
             // Send the text plain greeting
             res.type('text/plain');
-            res.send('Hello World');
+            res.send(`${req.query.name}`)
+            // res.send('Hello World');
             console.log("The server sent a plain text to the browser");
     }
+});
+
+app.post('/submit', (req,res)=>{
+    const value = req.body.name
+    console.log(value)
+    res.send(value)
 });
 
 // The application is to listen on http://localhost:3000
