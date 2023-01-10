@@ -2,13 +2,13 @@
 <form action="/dealer/sell" method="POST">
     <select name="deleteId">
         {{#each cars}}
-            <option value="{{this.id}}">brand: {{this.brand}} | model: {{this.model}} | year: {{this.year}}</option>
+            <option value="{{this.id}}">brand: {{this.brand}} | model: {{this.model}} | year: {{this.year}} | {{this.num}} szt.</option>
         {{/each}}
     </select>
-    <button type="submit">Return Your car</button>
+    <button type="submit">Sell Your car</button>
 </form>
 <h2>Add a new car!</h2>
-<form action="/warrior" method="post">
+<form action="/dealer/add" method="post">
     <label>
         Brand: <br>
         <input type="text" name="brand" placeholder="Brand" minlength="3" maxlength="50"><br>
@@ -23,7 +23,7 @@
     </label>
     <label>
         Number of Cars: <br>
-        <input type="number" name="num" value="1" min="1" max="10"><br>
+        <input type="number" name="num" value="1" min="1"><br>
     </label>
     <button type="submit">Save NEW car</button>
 </form>

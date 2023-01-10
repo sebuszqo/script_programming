@@ -42,8 +42,22 @@ app.use('/client', clientRouter);
 // using dealerRouter
 app.use('/dealer', dealerRouter)
 
-app.get('/', (req,res)=>{
-    res.render('home')
+app.get('/', async(req,res)=>{
+    const users = await UserRecord.listAll()
+    const carsToRender = await CarRecord.listAll()
+    const array = []
+    for (const user of users) {
+        let cars = await CarRecord.getOneCar(user.car)
+        array.push({
+            car: user.car,
+            name: user.name,
+            brand: cars.brand,
+            model: cars.model,
+            year: cars.year,
+            num: cars.num
+        })
+    }
+    res.render('home',{users})
 })
 //
 // app.get('/',async (req, res) => {

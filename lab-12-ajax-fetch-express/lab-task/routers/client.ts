@@ -12,10 +12,8 @@ clientRouter
     .get('/', async (req, res) => {
         const users = await UserRecord.listAll()
         const carsToRender = await CarRecord.listAll()
-        console.log(carsToRender)
         const array = []
         for (const user of users) {
-
             let cars = await CarRecord.getOneCar(user.car)
             array.push({
                 car: user.car,

@@ -13,10 +13,18 @@ dealerRouter
     })
     // post to start a fight
     .post('/add', async (req, res) => {
+        const {brand, model, year, num} = req.body
+        const car = new CarRecord({brand, model, year, num})
+        await car.insert()
+        res.redirect("/dealer")
     })
     .post('/sell', async (req, res) => {
         const {deleteId}=req.body
         const car = await CarRecord.getOneCar(deleteId)
-        await car.deleteOne()
+        if (car.num > 1) {
+            await car.decNum()
+        }else {
+            await car.deleteOne()
+        }
         res.redirect('/dealer')
     })

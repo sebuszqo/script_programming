@@ -22,9 +22,6 @@ export class CarRecord {
         if (model.length < 2 || model.length > 50) {
             throw new ValidationError(`model should count from 3 to 50 characters. Currently your brand counts: ${model.length}`)
         }
-        if (num <= 0 ){
-            throw new ValidationError("Too less cars in inventory to rent")
-        }
         // validation if my object has id if not then I am creating new uuid for him
         this.id = id ?? uuid();
         this.brand = brand;
