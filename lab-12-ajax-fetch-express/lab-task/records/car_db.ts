@@ -30,7 +30,6 @@ export class CarRecord {
         this.brand = brand;
         this.model = model;
         this.year = year;
-        // same thing as with 'id' with wins if there is no 'wins' I am setting wins to 0 (default)
         this.num = num
     }
 
@@ -61,7 +60,6 @@ export class CarRecord {
 
     static async listAll(): Promise<CarRecord[]> {
         const [results] = await db.execute("SELECT * FROM `Car`") as CarRecordResults;
-        // mapping array of warriors to create Warriors as Objects of WarriorRecord
         return results.map(obj => new CarRecord(obj))
     }
 

@@ -41,6 +41,10 @@ app.set('view engine', '.hbs')
 app.use('/client', clientRouter);
 // using dealerRouter
 app.use('/dealer', dealerRouter)
+
+app.get('/', (req,res)=>{
+    res.render('home')
+})
 //
 // app.get('/',async (req, res) => {
 //     const user = new UserRecord({id: '212',name:'michal',car:'123'})

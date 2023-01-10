@@ -6,11 +6,6 @@ import {ValidationError} from "../utils/errror";
 
 type UserRecordResults = [UserRecord[], FieldPacket[]]
 
-interface  User {
-    id?: string;
-    name:string;
-    car?: string;
-}
 export class UserRecord {
     public id?: string;
     public readonly name: string;
@@ -27,7 +22,7 @@ export class UserRecord {
         // validation if my object has id if not then I am creating new uuid for him
         this.id = id ?? uuid();
         this.name = name;
-        // same thing as with 'id' with wins if there is no 'wins' I am setting wins to 0 (default)
+        // same thing as with 'id' with wins if there is no 'carID' I am setting wins to '' (default)
         this.car = car ?? '';
     }
     static async getOneUser(id: string): Promise<UserRecord | null> {
@@ -47,7 +42,7 @@ export class UserRecord {
 
     static async listAll(): Promise<UserRecord[]> {
         const [results] = await db.execute("SELECT * FROM `User`") as UserRecordResults;
-        // mapping array of warriors to create Warriors as Objects of WarriorRecord
+        // mapping array of object to create Users as Objects of UserRecord
         return results.map(obj => new UserRecord(obj))
     }
 
