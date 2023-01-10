@@ -12,12 +12,37 @@ import { clientRouter } from "./routers/client";
 import {dealerRouter} from "./routers/dealer";
 import {UserRecord} from "./records/client_db";
 import {CarRecord} from "./records/car_db";
+import helmet from "helmet";
 
 // creating an express app
 const app = express();
 
 // methodOverride to use with PATCH PUT etc.
 app.use(methodOverride('_method'));
+
+`
+Dyrektywa defaultSrc określa zasoby, które mogą być ładowane przez przeglądarkę domyślnie, przez co 'self' oznacza tylko zasoby z tej samej strony.
+scriptSrc, styleSrc, imgSrc, fontSrc, connectSrc, objectSrc, workerSrc, frameSrc, frameAncestors, formAction, mediaSrc,
+ określa skąd mogą być ładowane odpowiednie zasoby, dla każdej z tych dyrektyw przestawione jest na 'self' co oznacza tylko zasoby z tej samej strony, 
+ a 'unsafe-inline' pozwala na używanie skryptów i stylów z linii inline z kodu HTML
+`
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'"],
+        imgSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        connectSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        workerSrc: ["'self'"],
+        frameSrc: ["'self'"],
+        frameAncestors: ["'self'"],
+        formAction: ["'self'"],
+        mediaSrc: ["'self'"]
+    }
+}));
+
 
 // I will use it cuz we will get our data through forms
 app.use(urlencoded({
@@ -45,10 +70,10 @@ app.use('/dealer', dealerRouter)
 app.get('/', async(req,res)=>{
     const users = await UserRecord.listAll()
     const carsToRender = await CarRecord.listAll()
-    const array = []
+    const log = []
     for (const user of users) {
         let cars = await CarRecord.getOneCar(user.car)
-        array.push({
+        log.push({
             car: user.car,
             name: user.name,
             brand: cars.brand,
@@ -57,7 +82,7 @@ app.get('/', async(req,res)=>{
             num: cars.num
         })
     }
-    res.render('home',{users})
+    res.render('home',{log})
 })
 //
 // app.get('/',async (req, res) => {
