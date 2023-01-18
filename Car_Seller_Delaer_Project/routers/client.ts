@@ -1,4 +1,4 @@
-import {Router} from "express";
+import {Request, Response, Router} from "express";
 import {UserRecord} from "../records/client_db";
 import {CarRecord} from "../records/car_db";
 import {type} from "os";
@@ -9,7 +9,7 @@ export const clientRouter = Router();
 
 clientRouter
     // form to make a fight
-    .get('/', async (req, res) => {
+    .get('/', async (req:Request, res:Response) => {
         const users = await UserRecord.listAll()
         const carsToRender = await CarRecord.listAll()
         const array = []
@@ -28,7 +28,7 @@ clientRouter
     })
     // post to start a fight
 
-    .post('/return', async (req, res) => {
+    .post('/return', async (req:Request, res:Response): Promise<void> => {
         const {returnId} = req.body
         const name = returnId.split(",")[1]
         const id = returnId.split(",")[0]
@@ -37,7 +37,7 @@ clientRouter
         await UserRecord.deleteOne(id,name)
         res.redirect('/client')
     })
-    .post('/rent', async (req, res) => {
+    .post('/rent', async (req:Request, res:Response) :Promise<void> => {
         // const {rentId} = req.body
         const {rentId, name}= req.body
         const user = new UserRecord({"name":name, "car":rentId})

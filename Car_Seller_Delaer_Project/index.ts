@@ -1,5 +1,5 @@
 import * as express from "express";
-import {static as expressStatic, urlencoded} from "express";
+import {Request, Response, static as expressStatic, urlencoded} from "express";
 import 'express-async-errors';
 import * as methodOverride from "method-override";
 import {engine} from "express-handlebars";
@@ -67,7 +67,7 @@ app.use('/client', clientRouter);
 // using dealerRouter
 app.use('/dealer', dealerRouter)
 
-app.get('/', async(req,res)=>{
+app.get('/', async(req:Request,res:Response):Promise<void> => {
     const users = await UserRecord.listAll()
     const carsToRender = await CarRecord.listAll()
     const log = []
@@ -84,15 +84,6 @@ app.get('/', async(req,res)=>{
     }
     res.render('home',{log})
 })
-//
-// app.get('/',async (req, res) => {
-//     const user = new UserRecord({id: '212',name:'michal',car:'123'})
-//     const rec = await user.insert()
-//
-//     const car = new CarRecord({num: 10, brand: "e46", model: "bmw", year: 1000, id:"112"})
-//     await car.insert()
-//     res.send('ok')
-// })
 
 
 
